@@ -1,0 +1,16 @@
+/* PatientSearch.css */
+.patient-search-container {
+    margin: 20px;
+}
+
+.patient-search-form {
+    margin-bottom: 20px;
+}
+
+.patient-search-button {
+    margin-top: 10px;
+}
+
+.patient-search-table {
+    margin-top: 20px;
+}

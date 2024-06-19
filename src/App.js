@@ -1,24 +1,110 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Navigation from "./Component/Navigation";
+import EmpNavigation from "./Component/EmpNavigation";
+import Dashboard from './Pages/Dashboard';
+// import Chat from './pages/Chat';
+import Login from './Pages/Login';
+import NoNavbarPage from './Component/noNavigation';
+import Home from './Pages/Home';
+import Consultation from './Pages/Consultation';
+import Consultation1 from './Pages/Consultation1';
+import PatientSearch from './Pages/PatientSearch';
+import AIchat from './Pages/AIchat';
+import Patient from './Pages/Patient';
+import HistoryPage from './Pages/HistoryPage';
 
-function App() {
+function App() {//This is the function that contains the react app
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>{/*This wraps the whole app in the BrowserRouter which handles navigation and routing in a react application */}
+
+      {/* <Navigation /> The navigation is outside cause the route wont change */}
+        <Routes>{/*This is a container for all the Route definition */}
+          <Route 
+          path="/" 
+          element={
+            <>
+              <NoNavbarPage navItems={['Dashboard', 'Login']} />
+              <Home />
+            </>
+          }
+          />
+          <Route
+          path="/dashboard"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <Dashboard />
+            </>
+          }
+        />
+          {/* Route difines how different url are handled, This renders the Home element in the react app*/}
+          <Route 
+          path="/login" 
+          element={
+            <>
+              <EmpNavigation navItems={['Home']} />
+              <Login />
+            </>
+          }
+          />
+          <Route
+          path="/consultation-new"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <Consultation />
+            </>
+          }
+        />
+        <Route
+          path="/consultation-follow-up"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <Consultation1 />
+            </>
+          }
+        />
+        <Route
+          path="/patient-search"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <PatientSearch />
+            </>
+          }
+        />
+        <Route
+          path="/AIchat"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <AIchat />
+            </>
+          }
+        />
+        <Route
+          path="/patient-page"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <Patient />
+            </>
+          }
+        />
+        <Route
+          path="/History-page"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <HistoryPage />
+            </>
+          }
+        />
+        </Routes>
+    </BrowserRouter>
   );
 }
 

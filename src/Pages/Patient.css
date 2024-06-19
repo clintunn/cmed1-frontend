@@ -1,0 +1,30 @@
+.patient-info-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-info-card .card-header {
+    background-color: #968e8e;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.patient-info-card .card-body .list-group-item {
+    background-color: transparent;
+    border-color: #eee;
+}
+
+.patient-history-table {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-history-table thead th {
+    background-color: #968e8e;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.patient-info-card {
+    margin-top: 30px;
+}
