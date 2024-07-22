@@ -8,7 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 function EmpNavigation() {
 return (
 <Navbar expand="lg" bg="dark" data-bs-theme="dark">
-    <Container>
+    <Container fluid>
     <LinkContainer to='/'>
     <Navbar.Brand>Campus-Med</Navbar.Brand>
     </LinkContainer>

@@ -1,14 +1,30 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 
-
 function Navigation() {
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:5001/api/providers/logout', {}, { withCredentials: true });
+            // Clear any user data from local storage or state management
+            localStorage.removeItem('user');
+            // Redirect to login page or home page
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            // Handle error (show a message to the user)
+        }
+    };
 return (
 <Navbar expand="lg" bg="dark" data-bs-theme="dark">
-    <Container>
+    <Container fluid>
     <LinkContainer to='/'>
     <Navbar.Brand>Campus-Med</Navbar.Brand>
     </LinkContainer>
@@ -41,8 +57,8 @@ return (
             <NavDropdown.Item href="#action/3.3">Consultation - follow up</NavDropdown.Item>
             </LinkContainer>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-            Log out
+            <NavDropdown.Item onClick={handleLogout}>
+                Log out
             </NavDropdown.Item>
         </NavDropdown>
         </Nav>

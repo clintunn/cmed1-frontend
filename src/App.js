@@ -9,11 +9,12 @@ import Login from './Pages/Login';
 import NoNavbarPage from './Component/noNavigation';
 import Home from './Pages/Home';
 import Consultation from './Pages/Consultation';
-import Consultation1 from './Pages/Consultation1';
 import PatientSearch from './Pages/PatientSearch';
+import FollowupConsultation from './Pages/FollowupConsultation';
 import AIchat from './Pages/AIchat';
 import Patient from './Pages/Patient';
 import HistoryPage from './Pages/HistoryPage';
+import CreatePatientPage from './Pages/CreatePatient';
 
 function App() {//This is the function that contains the react app
   return (
@@ -34,7 +35,7 @@ function App() {//This is the function that contains the react app
           path="/dashboard"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <Dashboard />
             </>
           }
@@ -50,6 +51,15 @@ function App() {//This is the function that contains the react app
           }
           />
           <Route
+          path="/create-patient"
+          element={
+            <>
+              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              <CreatePatientPage />
+            </>
+          }
+        />
+          <Route
           path="/consultation-new"
           element={
             <>
@@ -63,7 +73,7 @@ function App() {//This is the function that contains the react app
           element={
             <>
               <Navigation navItems={['Dashboard', 'AI Chat']} />
-              <Consultation1 />
+              <FollowupConsultation />
             </>
           }
         />
