@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Spinner, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { FaUser, FaRobot, FaPaperPlane,FaEdit } from 'react-icons/fa';
 import './AIchat.css';
 
@@ -85,11 +87,64 @@ function AIchat() {
         }
     };
 
+    const navigate = useNavigate;
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:5001/api/providers/logout', {}, { withCredentials: true });
+            // Clear any user data from local storage or state management
+            localStorage.removeItem('user');
+            // Redirect to login page or home page
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            // Handle error (show a message to the user)
+        }
+    };
+
     return (
+        <div className="aiChat-container">
+        <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+            <Navbar.Brand href="#home">CampusMed</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+                <LinkContainer to='/'>
+                <Nav.Link>Home</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/dashboard'>
+                <Nav.Link>Dashboard</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/create-patient'>
+                <Nav.Link>Create Patient</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/AIchat'>
+                <Nav.Link>AI Chat</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/History-page'>
+                <Nav.Link>History</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/complaint-log'>
+                <Nav.Link>Complaint Log</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/patient-search'>
+                <Nav.Link>Patient search</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/consultation-new'>
+                <Nav.Link>Consultation - new</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/consultation-follow-up'>
+                <Nav.Link>Consultation - follow up</Nav.Link>
+                </LinkContainer>
+                <Nav.Link onClick={handleLogout}>
+                    Log out
+                </Nav.Link>
+            </Nav>
+            </Navbar.Collapse>
+        </Navbar>
         <Container className="mt-5">
             <Row className="justify-content-md-center">
                 <Col md={8}>
-                    <h1 className="text-center mb-4">AI Chat</h1>
+                    {/* <h1 className="text-center mb-4">AI Chat</h1> */}
                     {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
                     <div className="chat-container p-3 border rounded">
                         {chat.map((chatMessage, index) => (
@@ -117,7 +172,12 @@ function AIchat() {
                                         type="text"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
-                                        onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                            e.preventDefault(); // Prevent default form submit action
+                                            sendMessage();
+                                            }
+                                        }}
                                         placeholder="Type your message..."
                                         className="rounded-pill"
                                     />
@@ -134,6 +194,7 @@ function AIchat() {
                 </Col>
             </Row>
         </Container>
+        </div>
     );    
 }
 

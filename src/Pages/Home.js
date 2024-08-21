@@ -1,8 +1,8 @@
 import React from "react";
-import { Row, Col, Container, Button, Card } from "react-bootstrap";
+import { Row, Col, Container, Button, Card, Carousel } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRobot, faDiagnoses, faMedkit, faCalendarCheck, faEnvelope, faPhone, faMapMarkerAlt, faUserMd, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import { faRobot, faDiagnoses, faMedkit, faCalendarCheck, faEnvelope, faPhone, faMapMarkerAlt, faUserMd, faQuoteLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 // import { faFacebookF, faTwitter, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import ScrollAnimation from "../Assets/ScrollAnimation";
 import "./Home.css";
@@ -14,8 +14,8 @@ function Home() {
       <div className="home-hero">
         <Row className="justify-content-center align-items-center h-100 m-0">
           <Col md={8} className="text-center">
-            <h1 className="mb-4">Welcome to Health Management System</h1>
-            <p className="lead mb-5">Take control of your health with our platform and AI technology.</p>
+            <h1 className="mb-4">Cloud Based Implementation of Artificial Intelligence to Healthcare Services</h1>
+            <p className="lead mb-5">A web application developed as part of this research which serves as proof, highlighting the ground-breaking impact that AI and cloud computing can have on healthcare services.</p>
             <LinkContainer to='/login'>
             <Button variant="dark" size="lg">Get Started</Button>
             </LinkContainer>
@@ -50,8 +50,8 @@ function Home() {
               <div className="feature-icon mb-3">
                 <FontAwesomeIcon icon={faMedkit} />
               </div>
-              <h3 className="feature-title">Medication Tracking</h3>
-              <p>Have full control of medication</p>
+              <h3 className="feature-title">Consultations</h3>
+              <p>Consultations online with healthcare providers</p>
             </Col>
             <Col md={6} lg={3} className="feature-item mb-4">
               <div className="feature-icon mb-3">
@@ -71,7 +71,8 @@ function Home() {
           <Row className="align-items-center">
             <Col md={6} className="mb-4 mb-md-0">
               <h2 className="cta-title">Ready to Take Control of Your Health?</h2>
-              <p className="cta-text">Join our users who have already improved their health with our system. Our team of expert healthcare professionals is ready to guide you on your journey to better health.</p>
+              <p className="cta-text">This project aims to enable users have an improved access to healthcare, and also help healthcare providers in the delivery of healthcare services to patients. The major objective is to make healthcare easier.</p>
+              <p className="cta-text">Log in to explore the system</p>
               <LinkContainer to='/login'>
               <Button variant="dark" >Login Now</Button>
               </LinkContainer>
@@ -85,8 +86,42 @@ function Home() {
         </Container>
       </div>
       </ScrollAnimation>
+    
+      <ScrollAnimation>
+      <div className="research-paper-section py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col md={8} className="text-center mb-5">
+              <h2 className="section-title">Research Paper</h2>
+            </Col>
+          </Row>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h3>Cloud Based Implementation of Artificial Intelligence to Healthcare Services in School Communities</h3>
+              <p>This research paper explores the revolutionary integration of AI and cloud computing in healthcare services. It delves into the methodologies, challenges, and potential benefits of implementing AI-driven solutions in a cloud environment to enhance healthcare delivery.</p>
+              <p>The aim of this project is to design and implement the application of artificial intelligence to healthcare services in school communities on the cloud.</p>
+              <p>The objectives include: </p>
+              <ul>
+                <li>The study and investigation of the application of artificial intelligence to healthcare services in school communities.</li>
+                <li>The design of a system for implementing the application of artificial intelligence to healthcare services in school communities</li>
+                <li>Modelling a database based on functional and performance requirement</li>
+                <li>Implementation of the proposed system</li>
+              </ul>
+              <Button variant="dark" href="https://drive.google.com/file/d/your-file-id/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                Download Research Paper
+              </Button>
+            </Col>
+            <Col md={6}>
+              <div className="research-paper-image">
+                <FontAwesomeIcon icon={faFileAlt} className="research-icon" />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </ScrollAnimation>
 
-    <ScrollAnimation>
+    {/* <ScrollAnimation>
       <div className="testimonial-section py-5">
         <Container>
           <Row className="justify-content-center">
@@ -134,6 +169,72 @@ function Home() {
           </Row>
         </Container>
       </div>
+      </ScrollAnimation> */}
+
+      <ScrollAnimation>
+        <div className="demo-section py-5">
+          <Container>
+            <Row className="justify-content-center">
+              <Col md={8} className="text-center mb-5">
+                <h2 className="section-title">Application Preview</h2>
+                <p className="lead">Explore key features of our AI-powered healthcare management system</p>
+              </Col>
+            </Row>
+            <Row className="align-items-center">
+              <Col lg={6} className="mb-4 mb-lg-0">
+                <Carousel>
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={require('../Assets/aichat.png')}
+                      alt="AI Diagnosis"
+                    />
+                    <Carousel.Caption>
+                      <h3>AI-Assisted Diagnosis</h3>
+                      <p>Advanced algorithms to support healthcare providers</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={require('../Assets/Dashboard pro.png')}
+                      alt="Dashboard"
+                    />
+                    <Carousel.Caption>
+                      <h3>Dashboard</h3>
+                      <p>Easy-to-use interface for managing health information</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={require('../Assets/Con N.png')}
+                      alt="Appointment Scheduling"
+                    />
+                    <Carousel.Caption>
+                      <h3>Consultations</h3>
+                      <p>Consultation between patients and providers</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                </Carousel>
+              </Col>
+              <Col lg={6}>
+                <h3>Experience the Future of Healthcare</h3>
+                <p>This application showcases cutting-edge features in healthcare management:</p>
+                <ul>
+                  <li>AI-assisted diagnosis and symptom checker</li>
+                  <li>Secure patient data management</li>
+                  <li>Intuitive appointment scheduling</li>
+                  <li>Real-time access to healthcare providers</li>
+                  <li>Personalized healthcare</li>
+                </ul>
+                {/* <Button variant="dark" onClick={() => alert('Demo request submitted')}>
+                  Request Full Demo
+                </Button> */}
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </ScrollAnimation>
 
       <footer className="footer">

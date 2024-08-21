@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
@@ -28,7 +29,7 @@ function FollowUpConsultation() {
 
     const searchPatient = async () => {
         try {
-            const response = await axios.get(`http://192.168.55.196:5001/api/patients/search?name=${patientName}`);
+            const response = await axios.get(`http://localhost:5001/api/patients/search?name=${patientName}`);
             if (response.data && response.data.length > 0) {
                 setPatient(response.data[0]);
                 setFormData({ ...formData, patientId: response.data[0]._id });
@@ -64,7 +65,7 @@ function FollowUpConsultation() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://192.168.55.196:5001/api/followUpConsultation', formData);
+            const response = await axios.post('http://localhost:5001/api/followUpConsultation', formData);
             console.log('Follow-up consultation created:', response.data);
             alert('Follow-up consultation created successfully');
             // Reset form or redirect here
@@ -75,6 +76,42 @@ function FollowUpConsultation() {
     };
 
     return (
+        <div className="followUpConsultation-container">
+            <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+            <Navbar.Brand href="#home">CampusMed</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+                <LinkContainer to='/'>
+                <Nav.Link>Home</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/dashboard'>
+                <Nav.Link>Dashboard</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/create-patient'>
+                <Nav.Link>Create Patient</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/AIchat'>
+                <Nav.Link>AI Chat</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/History-page'>
+                <Nav.Link>History</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/complaint-log'>
+                    <Nav.Link>Complaint Log</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/patient-search'>
+                <Nav.Link>Patient search</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/consultation-new'>
+                <Nav.Link>Consultation - new</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/consultation-follow-up'>
+                <Nav.Link>Consultation - follow up</Nav.Link>
+                </LinkContainer>
+            </Nav>
+            </Navbar.Collapse>
+        </Navbar>
         <Container>
             <Row>
                 <Col md={12} className="d-flex flex-direction-column align-items-center justify-content-center">
@@ -159,6 +196,7 @@ function FollowUpConsultation() {
                 </Col>
             </Row>
         </Container>
+        </div>
     );
 }
 

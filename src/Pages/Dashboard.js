@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Alert, Spinner, Nav, Navbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Card, Button, Alert, Spinner, Nav, Navbar, Form } from 'react-bootstrap';
 import { FaUser, FaStethoscope, FaBell, FaCalendarCheck, FaBars } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
-import './Dashboard.css';
+import "./Dashboard.css";
 
 axios.defaults.withCredentials = true;
 
@@ -21,10 +22,10 @@ function useDashboardData() {
     setIsLoading(true);
     try {
       const [profileRes, consultationRes, notificationsRes, appointmentsRes] = await Promise.all([
-        axios.get('http://192.168.55.196:5001/api/providers/providers/myself'),
-        axios.get('http://192.168.55.196:5001/api/consultations/last'),
-        axios.get('http://192.168.55.196:5001/api/notifications'),
-        axios.get('http://192.168.55.196:5001/api/appointments/pending')
+        axios.get('http://localhost:5001/api/providers/providers/myself'),
+        axios.get('http://localhost:5001/api/consultations/last'),
+        axios.get('http://localhost:5001/api/notifications'),
+        axios.get('http://localhost:5001/api/appointments/pending')
       ]);
   
       setData({
@@ -51,6 +52,9 @@ function useDashboardData() {
 function Dashboard() {
   const { data, isLoading, error, refreshData } = useDashboardData();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [appointmentDate, setAppointmentDate] = useState('');
+  const [appointmentTime, setAppointmentTime] = useState('');
+  const [appointmentReason, setAppointmentReason] = useState('');
 
   const handleConfirmAppointment = async (appointmentId) => {
     try {
@@ -62,6 +66,25 @@ function Dashboard() {
     }
   };
 
+  const handleRequestAppointment = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5001/api/appointments/request', {
+        date: appointmentDate,
+        time: appointmentTime,
+        reason: appointmentReason
+      });
+      alert('Appointment request sent successfully');
+      setAppointmentDate('');
+      setAppointmentTime('');
+      setAppointmentReason('');
+      refreshData();
+    } catch (err) {
+      console.error('Error requesting appointment:', err);
+      alert('Failed to request appointment. Please try again.');
+    }
+  };
+
   const markNotificationAsRead = async (notificationId) => {
     try {
       await axios.patch(`http://localhost:5001/api/notifications/${notificationId}/read`);
@@ -70,6 +93,20 @@ function Dashboard() {
       console.error('Error marking notification as read:', err);
     }
   };
+
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+        await axios.post('http://localhost:5001/api/providers/logout', {}, { withCredentials: true });
+        // Clear any user data from local storage or state management
+        localStorage.removeItem('user');
+        // Redirect to login page or home page
+        navigate('/login');
+    } catch (error) {
+        console.error('Logout failed:', error);
+        // Handle error (show a message to the user)
+    }
+};
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
@@ -103,6 +140,9 @@ function Dashboard() {
             <LinkContainer to='/History-page'>
               <Nav.Link>History</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/complaint-log'>
+              <Nav.Link>Complaint Log</Nav.Link>
+            </LinkContainer>
             <LinkContainer to='/patient-search'>
               <Nav.Link>Patient search</Nav.Link>
             </LinkContainer>
@@ -112,6 +152,9 @@ function Dashboard() {
             <LinkContainer to='/consultation-follow-up'>
               <Nav.Link>Consultation - follow up</Nav.Link>
             </LinkContainer>
+            <Nav.Link onClick={handleLogout}>
+                Log out
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -152,19 +195,22 @@ function Dashboard() {
                 </Card>
               </Col>
               <Col md={12} lg={8}>
-                <Card className="dashboard-card consultation-card">
-                  <Card.Body>
-                    <Card.Title><FaStethoscope /> Last Consultation Treated</Card.Title>
-                    <Card.Text className="consultation-details">
-                      <p><strong>Patient:</strong> {data.lastConsultation.patientName}</p>
-                      <p><strong>Date:</strong> {new Date(data.lastConsultation.date).toLocaleDateString()}</p>
-                      <p><strong>Diagnosis:</strong> {data.lastConsultation.diagnosis}</p>
-                      <p><strong>Treatment:</strong> {data.lastConsultation.treatment}</p>
-                      <p><strong>Medication:</strong> {data.lastConsultation.medication}</p>
-                      <p><strong>Instructions:</strong> {data.lastConsultation.instructions}</p>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+              <Card className="dashboard-card consultation-card">
+                <Card.Body>
+                  <Card.Title><FaStethoscope /> Last Consultation Treated</Card.Title>
+                  <Card.Text className="consultation-details">
+                    <p><strong>Patient:</strong> {data.lastConsultation.patient?.name}</p>
+                    <p><strong>Date:</strong> {new Date(data.lastConsultation.date).toLocaleDateString()}</p>
+                    <p><strong>Diagnosis:</strong> {data.lastConsultation.diagnosis}</p>
+                    <p><strong>Treatment:</strong> {data.lastConsultation.treatment}</p>
+                    <p><strong>Medications:</strong> {
+                      data.lastConsultation.medicationPrescriptions && data.lastConsultation.medicationPrescriptions.length > 0
+                        ? data.lastConsultation.medicationPrescriptions.map(prescription => prescription.medication).join(', ')
+                        : 'No medications prescribed'
+                    }</p>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
               </Col>
             </Row>
             <Row>
@@ -186,7 +232,7 @@ function Dashboard() {
                 </Card>
               </Col>
               <Col md={12} lg={6}>
-                <Card className="dashboard-card appointments-card">
+              <Card className="dashboard-card appointments-card">
                   <Card.Body>
                     <Card.Title><FaCalendarCheck /> Pending Appointments</Card.Title>
                     {data.pendingAppointments.map(appointment => (

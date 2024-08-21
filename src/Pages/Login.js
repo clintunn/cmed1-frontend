@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import "./Login.css";
 import axios from 'axios';
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import './Login.css';
 
 
 
@@ -34,7 +34,7 @@ function Login() {
 
         try {
             console.log('Sending login request...');
-            const response = await axios.post('http://192.168.55.196:5001/api/providers/login', { email, password });
+            const response = await axios.post('http://localhost:5001/api/providers/login', { email, password });
             console.log('Full response:', response);
     
             // Log the exact data being returned
@@ -92,7 +92,7 @@ return (
                     Healthcare made just for you !!
                     </h4>
                     <h4>
-                    Experience seamless delivery of healthcare services in your school community.
+                    Experience seamless delivery of healthcare services.
                     </h4>
                 </div>
                 </div>
@@ -107,7 +107,7 @@ return (
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} />
                         <Form.Text className="text-muted">
-                            Login with your school email address.
+                            Login with your email address.
                         </Form.Text>
                     </Form.Group>
 

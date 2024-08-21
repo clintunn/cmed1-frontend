@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Alert, Nav, Navbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import axios from 'axios';
+
 
 axios.defaults.withCredentials = true;
 
@@ -28,7 +30,7 @@ const CreatePatientPage = () => {
     setSuccess(false);
 
     try {
-      const response = await axios.post('http://192.168.55.196:5001/api/patients/', patientData);
+      const response = await axios.post('http://localhost:5001/api/patients/', patientData);
       setSuccess(true);
       setPatientData({
         name: '',
@@ -61,6 +63,42 @@ const CreatePatientPage = () => {
 };
 
   return (
+    <div className='createPatient-container'>
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+        <Navbar.Brand href="#home">CampusMed</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <LinkContainer to='/'>
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/dashboard'>
+              <Nav.Link>Dashboard</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/create-patient'>
+              <Nav.Link>Create Patient</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/AIchat'>
+              <Nav.Link>AI Chat</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/History-page'>
+              <Nav.Link>History</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/complaint-log'>
+              <Nav.Link>Complaint Log</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/patient-search'>
+              <Nav.Link>Patient search</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/consultation-new'>
+              <Nav.Link>Consultation - new</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/consultation-follow-up'>
+              <Nav.Link>Consultation - follow up</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     <Container>
       <Row className="justify-content-md-center mt-5">
         <Col md={8}>
@@ -173,6 +211,7 @@ const CreatePatientPage = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 

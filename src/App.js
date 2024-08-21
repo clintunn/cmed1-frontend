@@ -1,10 +1,9 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Navigation from "./Component/Navigation";
-import EmpNavigation from "./Component/EmpNavigation";
+// import EmpNavigation from "./Component/EmpNavigation";
 import Dashboard from './Pages/Dashboard';
-// import Chat from './pages/Chat';
 import Login from './Pages/Login';
 import NoNavbarPage from './Component/noNavigation';
 import Home from './Pages/Home';
@@ -15,6 +14,7 @@ import AIchat from './Pages/AIchat';
 import Patient from './Pages/Patient';
 import HistoryPage from './Pages/HistoryPage';
 import CreatePatientPage from './Pages/CreatePatient';
+import ComplaintLog from './Pages/ComplaintLog';
 
 function App() {//This is the function that contains the react app
   return (
@@ -45,7 +45,7 @@ function App() {//This is the function that contains the react app
           path="/login" 
           element={
             <>
-              <EmpNavigation navItems={['Home']} />
+              <NoNavbarPage navItems={['Dashboard', 'Login']} />
               <Login />
             </>
           }
@@ -54,7 +54,7 @@ function App() {//This is the function that contains the react app
           path="/create-patient"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <CreatePatientPage />
             </>
           }
@@ -63,7 +63,7 @@ function App() {//This is the function that contains the react app
           path="/consultation-new"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <Consultation />
             </>
           }
@@ -72,7 +72,7 @@ function App() {//This is the function that contains the react app
           path="/consultation-follow-up"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <FollowupConsultation />
             </>
           }
@@ -81,8 +81,17 @@ function App() {//This is the function that contains the react app
           path="/patient-search"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <PatientSearch />
+            </>
+          }
+        />
+        <Route
+          path="/complaint-log"
+          element={
+            <>
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
+              <ComplaintLog />
             </>
           }
         />
@@ -90,7 +99,7 @@ function App() {//This is the function that contains the react app
           path="/AIchat"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <AIchat />
             </>
           }
@@ -108,7 +117,7 @@ function App() {//This is the function that contains the react app
           path="/History-page"
           element={
             <>
-              <Navigation navItems={['Dashboard', 'AI Chat']} />
+              {/* <Navigation navItems={['Dashboard', 'AI Chat']} /> */}
               <HistoryPage />
             </>
           }

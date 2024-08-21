@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Form, Button, Table, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Table, Container, Row, Col, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import axios from 'axios'; 
 import './PatientSearch.css';
 
@@ -12,7 +13,7 @@ const PatientSearch = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.get(`http://192.168.55.196:5001/api/patients/search?name=${searchTerm}`);
+      const response = await axios.get(`http://localhost:5001/api/patients/search?name=${searchTerm}`);
       setPatients(response.data);
     } catch (error) {
       console.error('Error searching for patients:', error);
@@ -21,6 +22,39 @@ const PatientSearch = () => {
   };
 
   return (
+    <div className="patientSearch-container">
+    <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+        <Navbar.Brand href="#home">CampusMed</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <LinkContainer to='/'>
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/dashboard'>
+              <Nav.Link>Dashboard</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/create-patient'>
+              <Nav.Link>Create Patient</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/AIchat'>
+              <Nav.Link>AI Chat</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/History-page'>
+              <Nav.Link>History</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/patient-search'>
+              <Nav.Link>Patient search</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/consultation-new'>
+              <Nav.Link>Consultation - new</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/consultation-follow-up'>
+              <Nav.Link>Consultation - follow up</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     <Container className="patient-search-container">
       <Row>
         <Col>
@@ -46,7 +80,7 @@ const PatientSearch = () => {
           <Table striped bordered hover className="patient-search-table">
             <thead>
               <tr>
-                <th>Clinic ID</th>
+                {/* <th>Clinic ID</th> */}
                 <th>Name</th>
                 <th>Age</th>
                 <th>Gender</th>
@@ -55,7 +89,7 @@ const PatientSearch = () => {
             <tbody>
             {patients.map((patient) => (
               <tr key={patient.clinicId}>
-                <td>{patient.clinicId}</td>
+                {/* <td>{patient.clinicId}</td> */}
                 <td>{patient.name}</td>
                 <td>{patient.age}</td>
                 <td>{patient.gender}</td>
@@ -66,6 +100,7 @@ const PatientSearch = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 
